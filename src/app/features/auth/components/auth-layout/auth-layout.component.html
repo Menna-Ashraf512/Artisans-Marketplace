@@ -1,0 +1,23 @@
+<main class="auth-shell">
+	<section class="auth-shell-pane" aria-label="Skillio account">
+		<div class="auth-shell-content">
+			<header class="auth-layout-brand">
+				<h1 class="sr-only">Skillio</h1>
+				<div class="auth-logo" role="img" aria-label="Skillio"><span class="auth-logo-mark" aria-hidden="true">S</span></div>
+			</header>
+			<div class="auth-layout-content">
+				<router-outlet></router-outlet>
+			</div>
+		</div>
+	</section>
+	<aside class="auth-visual" aria-label="Artisan at work">
+		<img
+			class="auth-visual-image"
+			ngSrc="/workshop-carpenter.jpg"
+			fill
+			priority
+			sizes="(min-width: 768px) 50vw, 100vw"
+			alt="A woodworker shaping timber in his workshop"
+		/>
+	</aside>
+</main>

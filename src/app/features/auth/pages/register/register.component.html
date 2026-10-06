@@ -1,0 +1,114 @@
+<div class="auth-panel auth-register space-y-4">
+  <header class="auth-panel-header">
+    <h2 class="auth-panel-title">Sign up</h2>
+  </header>
+
+  <form class="space-y-3" [formGroup]="registerForm" (ngSubmit)="submit()" novalidate>
+    <div class="auth-register-field">
+      <label class="auth-label" for="register-name">Full Name</label>
+      <input
+        class="auth-input"
+        id="register-name"
+        type="text"
+        formControlName="name"
+        autocomplete="name"
+        [attr.aria-invalid]="registerForm.controls.name.invalid && registerForm.controls.name.touched"
+        aria-describedby="register-name-error"
+      />
+      <p id="register-name-error" class="auth-error" aria-live="polite">
+        @if (registerForm.controls.name.touched && registerForm.controls.name.hasError('required')) {
+          Full name is required.
+        }
+      </p>
+    </div>
+
+    <div class="auth-register-field">
+      <label class="auth-label" for="register-phone">Phone-number</label>
+      <div class="auth-phone-control">
+        <select
+          class="auth-country-code"
+          aria-label="Country code"
+          [value]="selectedCountryCode()"
+          (change)="setCountryCode($event)"
+        >
+          @for (countryCode of countryCodes; track countryCode) {
+            <option [value]="countryCode">{{ countryCode }}</option>
+          }
+        </select>
+        <input
+          class="auth-input"
+          id="register-phone"
+          type="tel"
+          formControlName="phone"
+          autocomplete="tel-national"
+          [attr.aria-invalid]="registerForm.controls.phone.invalid && registerForm.controls.phone.touched"
+          aria-describedby="register-phone-error"
+        />
+      </div>
+      <p id="register-phone-error" class="auth-error" aria-live="polite">
+        @if (registerForm.controls.phone.touched && registerForm.controls.phone.hasError('pattern')) {
+          Enter a valid phone number.
+        }
+      </p>
+    </div>
+
+    <div class="auth-register-field">
+      <label class="auth-label" for="register-email">Email</label>
+      <input
+        class="auth-input"
+        id="register-email"
+        type="email"
+        formControlName="email"
+        autocomplete="email"
+        [attr.aria-invalid]="registerForm.controls.email.invalid && registerForm.controls.email.touched"
+        aria-describedby="register-email-error"
+      />
+      <p id="register-email-error" class="auth-error" aria-live="polite">
+        @if (registerForm.controls.email.touched && registerForm.controls.email.hasError('required')) {
+          Email is required.
+        } @else if (registerForm.controls.email.touched && registerForm.controls.email.hasError('email')) {
+          Enter a valid email address.
+        }
+      </p>
+    </div>
+
+    <div class="auth-register-field">
+      <label class="auth-label" for="register-password">Password</label>
+      <input
+        class="auth-input"
+        id="register-password"
+        type="password"
+        formControlName="password"
+        autocomplete="new-password"
+        aria-describedby="register-password-error"
+        [attr.aria-invalid]="registerForm.controls.password.invalid && registerForm.controls.password.touched"
+      />
+      <p id="register-password-error" class="auth-error" aria-live="polite">
+        @if (registerForm.controls.password.touched && registerForm.controls.password.hasError('required')) {
+          Password is required.
+        } @else if (registerForm.controls.password.touched && registerForm.controls.password.hasError('minlength')) {
+          Use at least 8 characters.
+        }
+      </p>
+    </div>
+
+    <button
+      class="auth-submit"
+      type="submit"
+      [disabled]="registerForm.invalid || isSubmitting()"
+      [attr.aria-busy]="isSubmitting()"
+    >
+      @if (isSubmitting()) {
+        <span class="size-4 animate-spin rounded-full border-2 border-white/40 border-t-white" role="status" aria-label="Creating account"></span>
+        <span>Creating account...</span>
+      } @else {
+        <span>Create account</span>
+      }
+    </button>
+  </form>
+
+  <p class="text-center text-sm text-slate-500">
+    Already have an account?
+    <a class="font-semibold underline-offset-4 hover:underline" routerLink="/login">Sign in</a>
+  </p>
+</div>
